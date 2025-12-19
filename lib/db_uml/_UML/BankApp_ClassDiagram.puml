@@ -1,0 +1,67 @@
+@startuml
+left to right direction
+
+' Classes principales
+class Bank {
+  +name: String
+  +manageAccount(): void
+}
+
+class Account {
+  +number: String
+  +client: Client
+  +balance: double
+  +deposit(amount: double): void
+  +withdraw(amount: double): void
+  +transfer(amount: double, destination: Account): void
+}
+
+class Client {
+  +name: String
+  +address: String
+}
+
+class Transaction {
+  +date: DateTime
+  +type: TransactionType
+  +amount: double
+  +sourceAccount: Account
+  +destinationAccount: Account
+}
+
+
+class LimitedAccount {
+  -limit: double
+  +checkLimit(amount: double): boolean
+}
+
+' Enum pour les types de transaction
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER
+}
+
+' Relations
+Bank "1" o-- "0..*" Account : manages >
+Account "1" -- "0..*" Transaction : source >
+Account "0..1" -- "1" Transaction : destination >
+Account <|-- LimitedAccount
+Client "1..*" *-- "1..*" Account : belongs to
+
+' Notes pour clarifier les relations
+note left of Transaction::destinationAccount
+  Only set for TRANSFER type.
+  Null for DEPOSIT/WITHDRAWAL.
+end note
+
+note right of Account::balance
+  Must be > 0.
+  Checked before WITHDRAWAL/TRANSFER.
+end note
+
+note right of LimitedAccount::limit
+  Throws LimitExceededException
+  if amount > limit.
+end note
+@enduml
