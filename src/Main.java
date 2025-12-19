@@ -1,3 +1,4 @@
+import Business.InvalidAmountException;
 import Daos.AccountDao;
 import Daos.CustomerDao;
 import Models.Account;
@@ -8,7 +9,7 @@ import Models.Customer;
  */
 public class Main {
     
-    public static void main(String[] args) {
+    static void main(String[] args) {
         System.out.println("=== Démonstration de l'architecture DAO générique ===");
         
         try {
@@ -34,23 +35,34 @@ public class Main {
         
         try {
             // Créer un nouveau compte
-            Account newAccount = new Account("FR7612345678901234567890123", 1000.0, 1);
+            Account newAccount = new Account("PT2112345678901234567890124", 1000.0, 1);
             Account createdAccount = accountDao.create(newAccount);
             System.out.println("Compte créé: " + createdAccount);
             
             // Lire le compte créé
-            String accountNumber = "FR7612345678901234567890123";
-            if (accountDao.exists(accountNumber)) {
-                Account retrievedAccount = accountDao.read(accountNumber).get();
+            String number = "PT2112345678901234567890124";
+            if (accountDao.exists(number)) {
+                Account retrievedAccount = accountDao.read(number).get();
                 System.out.println("Compte récupéré: " + retrievedAccount);
             }
             
             // Mettre à jour le compte
-            if (accountDao.exists(accountNumber)) {
-                Account accountToUpdate = accountDao.read(accountNumber).get();
+            if (accountDao.exists(number)) {
+                Account accountToUpdate = accountDao.read(number).get();
                 accountToUpdate.balance = 1500.0;
                 Account updatedAccount = accountDao.update(accountToUpdate);
                 System.out.println("Compte mis à jour: " + updatedAccount);
+            }
+            
+            // Test fonction deposit()
+            if(accountDao.exists(number)){
+                Account retrievedAccount = accountDao.read(number).get();
+                try {
+                    retrievedAccount.deposit(-100);
+                } catch (InvalidAmountException e) {
+                    IO.println(e.getMessage());
+                }
+                retrievedAccount.deposit(10000);
             }
             
             // Lire tous les comptes
@@ -60,8 +72,8 @@ public class Main {
             }
             
             // Supprimer le compte (nettoyage)
-            if (accountDao.exists(accountNumber)) {
-                boolean deleted = accountDao.delete(accountNumber);
+            if (accountDao.exists(number)) {
+                boolean deleted = accountDao.delete(number);
                 System.out.println("Compte supprimé: " + deleted);
             }
             
