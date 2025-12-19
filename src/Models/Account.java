@@ -19,17 +19,4 @@ public class Account {
         return "[" + this.number + "]: " + this.balance + "€";
     }
 
-    public void deposit(double amount) throws InvalidAmountException{
-        if(amount <= 0 ) {
-            throw new InvalidAmountException("Amount cannot be zero or negative");
-        }
-        this.balance += amount;
-        try {
-            var dao = new AccountDao();
-            dao.update(this);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

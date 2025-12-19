@@ -1,3 +1,6 @@
+package Tests;
+
+import Business.Bank;
 import Business.InvalidAmountException;
 import Daos.AccountDao;
 import Daos.CustomerDao;
@@ -9,7 +12,7 @@ import Models.Customer;
  */
 public class Main {
     
-    static void main(String[] args) {
+    public static void main(String[] args) {
         System.out.println("=== Démonstration de l'architecture DAO générique ===");
         
         try {
@@ -57,12 +60,14 @@ public class Main {
             // Test fonction deposit()
             if(accountDao.exists(number)){
                 Account retrievedAccount = accountDao.read(number).get();
+                
                 try {
-                    retrievedAccount.deposit(-100);
+                    Bank.deposit(-100, retrievedAccount );
                 } catch (InvalidAmountException e) {
                     IO.println(e.getMessage());
                 }
-                retrievedAccount.deposit(10000);
+                retrievedAccount.balance += 100000;
+                Bank.deposit(10000, retrievedAccount );
             }
             
             // Lire tous les comptes

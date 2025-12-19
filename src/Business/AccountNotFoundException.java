@@ -1,7 +1,12 @@
 package Business;
 
 public class AccountNotFoundException extends BankExceptions {
-    public AccountNotFoundException(String m){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AccountNotFoundException(String m){
         super(m);
     }
 }
