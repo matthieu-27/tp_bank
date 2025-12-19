@@ -42,33 +42,33 @@ INSERT INTO `account` (`number`, `balance`, `bank_id`) VALUES
 -- Listage de la structure de table tp_bank. bank
 DROP TABLE IF EXISTS `bank`;
 CREATE TABLE IF NOT EXISTS `bank` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Listage des données de la table tp_bank.bank : ~1 rows (environ)
-INSERT INTO `bank` (`id`, `name`) VALUES
-	(1, 'LA CITY DE WALL STREET DE FMS');
+INSERT INTO `bank` (`name`) VALUES
+	('LA CITY DE WALL STREET DE FMS');
 
 -- Listage de la structure de table tp_bank. client
 DROP TABLE IF EXISTS `client`;
 CREATE TABLE IF NOT EXISTS `client` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `address` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Listage des données de la table tp_bank.client : ~7 rows (environ)
-INSERT INTO `client` (`id`, `name`, `address`) VALUES
-	(1, 'Sisely Lessmare', '78 Amoth Junction'),
-	(2, 'Elinore Roadnight', '928 Shasta Crossing'),
-	(3, 'Lizzie Casserley', '35 Arrowood Crossing'),
-	(4, 'Amos Bentley', '3957 Declaration Park'),
-	(5, 'Ade Derwin', '4 Eggendart Junction'),
-	(6, 'Elyn Prevett', '600 Victoria Point'),
-	(7, 'Benji McKerron', '600 Victoria Point');
+INSERT INTO `client` (`name`, `address`) VALUES
+	( 'Sisely Lessmare', '78 Amoth Junction'),
+	( 'Elinore Roadnight', '928 Shasta Crossing'),
+	( 'Lizzie Casserley', '35 Arrowood Crossing'),
+	( 'Amos Bentley', '3957 Declaration Park'),
+	( 'Ade Derwin', '4 Eggendart Junction'),
+	( 'Elyn Prevett', '600 Victoria Point'),
+	( 'Benji McKerron', '600 Victoria Point');
 
 -- Listage de la structure de table tp_bank. client_accounts
 DROP TABLE IF EXISTS `client_accounts`;
@@ -94,7 +94,7 @@ INSERT INTO `client_accounts` (`client_id`, `account_number`) VALUES
 -- Listage de la structure de table tp_bank. limited_account
 DROP TABLE IF EXISTS `limited_account`;
 CREATE TABLE IF NOT EXISTS `limited_account` (
-  `id` varchar(50) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `maxLimit` decimal(14,2) NOT NULL,
   `account_number` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
@@ -103,13 +103,13 @@ CREATE TABLE IF NOT EXISTS `limited_account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Listage des données de la table tp_bank.limited_account : ~1 rows (environ)
-INSERT INTO `limited_account` (`id`, `maxLimit`, `account_number`) VALUES
-	('1', 100000.00, 'PT63 9288 3512 5452 2557 3389 4');
+INSERT INTO `limited_account` ( `maxLimit`, `account_number`) VALUES
+	( 100000.00, 'PT63 9288 3512 5452 2557 3389 4');
 
 -- Listage de la structure de table tp_bank. transaction
 DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE IF NOT EXISTS `transaction` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `amount` decimal(14,2) NOT NULL,
   `source_account` varchar(50) NOT NULL,
@@ -122,9 +122,9 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Listage des données de la table tp_bank.transaction : ~2 rows (environ)
-INSERT INTO `transaction` (`id`, `datetime`, `amount`, `source_account`, `destination_account`) VALUES
-	(1, '2025-12-19 05:46:05', 100000.00, 'FR59 6185 9022 48TJ BZWZ GTMU E46', 'FR34 0722 3151 11PL VYJR JGFF 480'),
-	(2, '2025-12-19 05:46:05', 100000.00, 'FI32 2958 8543 8737 74', 'PT63 9288 3512 5452 2557 3389 4');
+INSERT INTO `transaction` (`datetime`, `amount`, `source_account`, `destination_account`) VALUES
+	('2025-12-19 05:46:05', 100000.00, 'FR59 6185 9022 48TJ BZWZ GTMU E46', 'FR34 0722 3151 11PL VYJR JGFF 480'),
+	('2025-12-19 05:46:05', 100000.00, 'FI32 2958 8543 8737 74', 'PT63 9288 3512 5452 2557 3389 4');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
