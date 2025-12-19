@@ -1,6 +1,8 @@
 package Business;
 
-public class BankExceptions extends Exception {
+import java.sql.SQLException;
+
+public class BankExceptions extends SQLException {
     public BankExceptions(String m) {
         super(m);
     }

@@ -1,6 +1,7 @@
 package Tests;
 
 import Business.Bank;
+import Business.InsufficientBalanceException;
 import Business.InvalidAmountException;
 import Daos.AccountDao;
 import Daos.CustomerDao;
@@ -38,12 +39,12 @@ public class Main {
         
         try {
             // Créer un nouveau compte
-            Account newAccount = new Account("PT2112345678901234567890124", 1000.0, 1);
+            Account newAccount = new Account("FM2112345678901234567890112", 1000.0, 1);
             Account createdAccount = accountDao.create(newAccount);
             System.out.println("Compte créé: " + createdAccount);
             
             // Lire le compte créé
-            String number = "PT2112345678901234567890124";
+            String number = "FM2112345678901234567890112";
             if (accountDao.exists(number)) {
                 Account retrievedAccount = accountDao.read(number).get();
                 System.out.println("Compte récupéré: " + retrievedAccount);
@@ -69,7 +70,19 @@ public class Main {
                 retrievedAccount.balance += 100000;
                 Bank.deposit(10000, retrievedAccount );
             }
-            
+
+            // Test fonction withdraw
+            if(accountDao.exists(number)){
+                Account retrievedAccount = accountDao.read(number).get();
+
+                try {
+                    Bank.withdraw(540450545, retrievedAccount );
+                } catch (InsufficientBalanceException e) {
+                    IO.println(e.getMessage());
+                }
+                retrievedAccount.balance -= 100;
+                Bank.withdraw(100, retrievedAccount);
+            }
             // Lire tous les comptes
             System.out.println("Tous les comptes:");
             for (Account account : accountDao.readAll()) {
